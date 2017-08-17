@@ -4,34 +4,30 @@ $(function() {
     var $test = $('#questions');
 
     var pos = 0;
-    var $choices, $choice, question, chA, chB, chC, insertQuest, correctAns;
+    var $choices, $choice, question, chA, chB, chC, insertQuest;
     var correct = 0;
 
-
-    var questionsArray = [
-
-        ["Who is the Minister of  Eductaion", "Jeffery Archer", "Mohammed Archer", "Jesse Archer", "A"],
-        ["How old is Nigeria", "50", "49", "51", "C"],
-        ["What is the capital of United State of America", "Michigan", "Washington", "California", "B"],
-        ["Who let the cat out of the bag", "Abraham", "Micheal Jackson", "None of the above", "C"],
-
-    ];
+    var json = $.getJSON('resource/package.json');
 
     function renderQuestion() {
-        insertPos = 'Question ' + (pos + 1) + ' of ' + questionsArray.length;
 
-        if (pos >= questionsArray.length) {
-            $questNo.html('You got ' + correct + ' question(s) right out of ' + questionsArray.length + ' questions');
-            $test.html('You have completed this Quize');
-            $('#submit').attr('disabled', true);
-            $('#submit').text('Thanks');
+        json.done(function(data) {
 
-        } else {
+            if (pos >= data.questionsArray.length) {
+                $questNo.html('You got ' + correct + ' question(s) right out of ' + data.questionsArray.length + ' questions');
+                $test.html('You have completed this Quiz');
+                $('#submit').remove();
 
-            question = questionsArray[pos][0];
-            chA = questionsArray[pos][1];
-            chB = questionsArray[pos][2];
-            chC = questionsArray[pos][3];
+                return false;
+            }
+
+            insertPos = 'Question ' + (pos + 1) + ' of ' + data.questionsArray.length;
+            question = data.questionsArray[pos].question;
+            chA = data.questionsArray[pos].chA;
+            chB = data.questionsArray[pos].chB;
+            chC = data.questionsArray[pos].chC;
+
+
 
             insertQuest = question + "<br/ >";
             insertQuest += "<input type = 'checkbox' id = 'choices' value = 'A'/>" + chA + "<br />";
@@ -40,9 +36,9 @@ $(function() {
 
             $questNo.html(insertPos);
             $test.html(insertQuest).hide().fadeIn('slow');
-        }
-
+        });
     }
+
 
     function checkAnswer() {
         $choices = $('input');
@@ -52,13 +48,17 @@ $(function() {
                 console.log($choice);
             }
         }
-        if ($choice === questionsArray[pos][4]) {
-            correct++;
-            console.log(correct);
-        }
+        json.done(function(data) {
+            if ($choice === data.questionsArray[pos].answer) {
+                correct++;
+                console.log(correct);
+            }
+        });
+
         pos++;
         renderQuestion();
     }
+
 
 
     $('#submit').on('click', checkAnswer);

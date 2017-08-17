@@ -1,0 +1,31 @@
+{
+  "questionsArray": [{
+      "question": "Who is the Minister of  Eductaion",
+      "chA": "Jeffery Archer",
+      "chB": "Mohammed Archer",
+      "chC": "Jesse Archer",
+      "answer": "A"
+    },
+    {
+      "question": "How old is Nigeria",
+      "chA": "50",
+      "chB": "51",
+      "chC": "49",
+      "answer": "B"
+    },
+    {
+      "question": "What is the capital of United State of America",
+      "chA": "California",
+      "chB": "Washington",
+      "chC": "Michigan",
+      "answer": "B"
+    },
+    {
+      "question": "Who let the cat out of the bag",
+      "chA": "Abraham",
+      "chB": "Mohammed",
+      "chC": "None of the of the above",
+      "answer": "C"
+    }
+  ]
+}
