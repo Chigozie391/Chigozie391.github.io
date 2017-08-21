@@ -1,24 +1,30 @@
 $(function() {
 
-    var $questNo = $('#questNo');
-    var $test = $('#questions');
-
-    var pos = 0;
-    var $choices, $choice, question, chA, chB, chC, insertQuest;
-    var correct = 0;
 
     var json = $.getJSON('resource/package.json');
+    var $questNo = $('#questNo');
+    var $test = $('#questions');
+    var $next = $('#next');
+    var $prev = $('#prev');
+    var $submit = $('#submit');
+
+    var correct = 0;
+    var pos = 0;
+    var answerDataArray = [];
+
+    var $choices, question, chA, chB, chC, insertQuest;
+
+
+
+    //localStorage.clear();
 
     function renderQuestion() {
 
         json.done(function(data) {
 
-            if (pos >= data.questionsArray.length) {
-                $questNo.html('You got ' + correct + ' question(s) right out of ' + data.questionsArray.length + ' questions');
-                $test.html('You have completed this Quiz');
-                $('#submit').remove();
-
-                return false;
+            if (pos === data.questionsArray.length - 1) {
+                $next.hide();
+                $submit.toggle();
             }
 
             insertPos = 'Question ' + (pos + 1) + ' of ' + data.questionsArray.length;
@@ -26,41 +32,96 @@ $(function() {
             chA = data.questionsArray[pos].chA;
             chB = data.questionsArray[pos].chB;
             chC = data.questionsArray[pos].chC;
-
+            chD = data.questionsArray[pos].chD;
 
 
             insertQuest = question + "<br/ >";
-            insertQuest += "<input type = 'checkbox' id = 'choices' value = 'A'/>" + chA + "<br />";
-            insertQuest += "<input type = 'checkbox' id = 'choices' value = 'B'/>" + chB + "<br />";
-            insertQuest += "<input type = 'checkbox' id = 'choices' value = 'C'/>" + chC + "<br />";
+            insertQuest += "<input type = 'radio' name = 'choice' id = 'choices' value = 'A'/>" + chA + "<br />";
+            insertQuest += "<input type = 'radio' name = 'choice' id = 'choices' value = 'B'/>" + chB + "<br />";
+            insertQuest += "<input type = 'radio' name = 'choice' id = 'choices' value = 'C'/>" + chC + "<br />";
+            insertQuest += "<input type = 'radio' name = 'choice' id = 'choices' value = 'D'/>" + chD + "<br />";
+
 
             $questNo.html(insertPos);
             $test.html(insertQuest).hide().fadeIn('slow');
+            storedAnswer();
         });
     }
 
 
-    function checkAnswer() {
-        $choices = $('input');
-        for (var i = 0; i < $choices.length; i++) {
-            if ($choices[i].checked) {
-                $choice = $choices[i].value;
-                console.log($choice);
+
+    function storedAnswer() {
+        var radio = document.getElementsByName('choice');
+        var storagedata = localStorage.getItem(pos);
+        for (var i = 0; i < radio.length; i++) {
+            if (radio[i].value == storagedata) {
+                radio[i].checked = true;
             }
         }
-        json.done(function(data) {
-            if ($choice === data.questionsArray[pos].answer) {
-                correct++;
-                console.log(correct);
-            }
-        });
 
-        pos++;
-        renderQuestion();
+        $('input[name = choice]').on('change', function() {
+            localStorage.setItem(pos, $(this).val());
+        });
     }
 
 
 
-    $('#submit').on('click', checkAnswer);
+    function nextQues() {
+
+        $choices = $('input');
+        var numChecked = 0;
+        $choices.each(function() {
+            if ($(this).is(':checked')) {
+                numChecked++;
+                answerDataArray.splice(pos, 1, $(this).val());
+            }
+        });
+        if (numChecked === 0) answerDataArray.splice(pos, 1, null);
+
+        pos++;
+        if (pos < 5) {
+            renderQuestion();
+        }
+        console.log(answerDataArray);
+    }
+
+
+    function previousQues() {
+        if (pos >= 1) {
+            pos--;
+            renderQuestion();
+        }
+        if ($next.css('display') == 'none') {
+            $next.toggle();
+        }
+        $submit.hide();
+    }
+
+
+    function submit() {
+        nextQues();
+        json.done(function(data) {
+            for (var i = 0; i < data.questionsArray.length; i++) {
+                if (data.questionsArray[i].answer === answerDataArray[i]) {
+                    correct++;
+                }
+            }
+
+            $questNo.html('You got ' + correct + ' question(s) right out of ' + data.questionsArray.length + ' Questions');
+            $test.html('You have completed this Quize, Thanks for Participating');
+            $submit.detach();
+            $next.detach();
+            $prev.detach();
+            console.log(correct);
+        });
+    }
+
+    $submit.hide();
     renderQuestion();
+
+
+    $next.on('click', nextQues);
+    $prev.on('click', previousQues);
+    $submit.on('click', submit);
+
 });

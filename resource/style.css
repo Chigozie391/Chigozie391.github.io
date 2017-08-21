@@ -1,19 +1,44 @@
+@import url(http://fonts.googleapis.com/css?family=Oswald);
+
+
+body {
+    /*font-family: 'Oswald', 'Futura', sans-serif;*/
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+
+
+/* Responsive page rules at bottom of style sheet */
+
 div.container {
-    width: 600px;
+    max-width: 600px;
+    min-width: 340px;
     position: relative;
     top: 100px;
-    margin: 0px auto;
+    margin: 0 auto 0 auto;
     background-color: #78909C;
     border: 1px solid #000;
     border-radius: 10px;
     padding: 0px 10px 5px 10px;
 }
 
+
+/*div#footer {
+    height: 15px;
+    width: inherit;
+    border-radius: 5px;
+    background-color: inherit;
+}
+*/
+
 div#questions {
     font-size: 18px;
     line-height: 1.5em;
     margin-left: 5px;
-    color: #fff;
 }
 
 h2 {
@@ -22,9 +47,68 @@ h2 {
     font-weight: lighter;
 }
 
+#next,
+#prev,
 #submit {
-    margin: 10px 10px 5px 0px;
-    border-radius: 5px;
+    position: relative;
+    display: inline-block;
+    margin: 10px 200px 5px 0px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     color: #106f8a;
     font-weight: bold
+}
+
+#submit {
+    float: right;
+    margin: 10px 10px 5px 0px;
+}
+
+
+
+
+
+
+
+
+
+
+/* Small screen - acts like the app would */
+
+@media only screen and (max-width: 500px) {
+
+    #container {
+        max-width: 480px;
+    }
+}
+
+@media only screen and (min-width: 501px) and (max-width: 767px) {
+    #container {
+        max-width: 480px;
+        margin: 20px auto 20px auto;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+    #container {
+        max-width: 480px;
+        margin: 20px auto 20px auto;
+    }
+}
+
+
+
+
+
+
+
+
+
+/* Larger screens act like a demo for the app */
+
+@media only screen and (min-width: 960px) {
+    #container {
+        max-width: 480px;
+        margin: 20px auto 20px auto;
+    }
 }

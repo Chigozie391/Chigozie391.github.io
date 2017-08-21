@@ -4,6 +4,7 @@
       "chA": "Jeffery Archer",
       "chB": "Mohammed Archer",
       "chC": "Jesse Archer",
+      "chD": "Jesse Archer",
       "answer": "A"
     },
     {
@@ -11,6 +12,7 @@
       "chA": "50",
       "chB": "51",
       "chC": "49",
+      "chD": "Jesse Archer",
       "answer": "B"
     },
     {
@@ -18,6 +20,7 @@
       "chA": "California",
       "chB": "Washington",
       "chC": "Michigan",
+      "chD": "Jesse Archer",
       "answer": "B"
     },
     {
@@ -25,7 +28,16 @@
       "chA": "Abraham",
       "chB": "Mohammed",
       "chC": "None of the of the above",
+      "chD": "Jesse Archer",
       "answer": "C"
+    },
+    {
+      "question": "What is the capital of United State of America",
+      "chA": "California",
+      "chB": "Washington",
+      "chC": "Michigan",
+      "chD": "Jesse Archer",
+      "answer": "B"
     }
   ]
 }
