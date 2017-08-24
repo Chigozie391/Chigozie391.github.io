@@ -2,27 +2,32 @@
 <html>
 
 <head>
-    <title>Quiz App</title>
-    <link rel="stylesheet" type="text/css" href="resource/style.css"></link>
+    <title>Computer Based Test</title>
+    <link rel="stylesheet" href="resource/login.css" />
 </head>
 
 <body>
-    <div id='#container' class="container">
-        <h2 id="questNo"></h2>
-        <div id="questions">
+    <div id="page">
+        <div id='container'>
+            <h2>New Account</h2>
+            <div id="page">
+                <form method="GET" action="resource/app.html">
+                    <div id='formlog'>
+                        <label for="username">Name :</label>
+                        <input type="text" id="name" required />
+                        <br />
+                        <input type="submit" onsubmit="setName();" value="Start Quiz" />
+                    </div>
+                </form>
+            </div>
         </div>
-        <br />
-        <button id='prev'>Prev. </button>
-        <button id='next'>Next </button>
-        <button id='submit'>submit </button>
-        <!-- <div id='footer'>
-            <input type='radio' name='no' id='choices' value='0' />
-            <input type='radio' name='no' id='choices' value='1' />
-        </div>
-        -->
     </div>
+    <script>
+    function setName() {
+        var val = document.getElementById('name').value;
+        localStorage.setItem('name', val);
+    }
+    </script>
 </body>
-<script type="text/javascript" src="resource/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="resource/main.js"></script>
 
 </html>

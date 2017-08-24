@@ -1,0 +1,113 @@
+body {
+    background-color: #fff;
+    font-family: 'Oswald', 'Futura', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#page {
+    background-color: #403c3b;
+    margin: 0 auto 0 auto;
+    height: 300px;
+    border-radius: 20px
+}
+
+h2 {
+    margin-top: 100px;
+    color: #000;
+    font-size: 24px;
+    font-weight: normal;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .3em;
+}
+
+
+form {
+    position: relative;
+    top: 100px;
+    padding: 0 60px 65px 60px;
+}
+
+label {
+    color: #fff;
+    display: block;
+    margin: 10px 0 10px 0;
+    font-size: 24px;
+}
+
+
+input[type='submit'] {
+    background-color: #cb6868;
+    color: #f3dad1;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin-top: 10px;
+    float: right;
+    font-size: 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+input[type='submit']:hover {
+    background-color: #d75359;
+    color: #f3dad1;
+    cursor: pointer;
+    box-shadow: none;
+    position: relative;
+    top: 1px;
+}
+
+input[type='text'] {
+    background-color: #999;
+    color: #666;
+    font-family: 'Oswald', 'Futura', sans-serif;
+    font-size: 24px;
+    width: 96%;
+    padding: 4px 6px;
+    border: 1px solid #999;
+    border-radius: 8px;
+}
+
+input[type='text']:focus {
+    border: 1px solid #fff;
+    background-color: #fff;
+    outline: none;
+}
+
+@media only screen and (max-width: 500px) {
+    body {
+        background-color: #403c3b;
+    }
+    #page {
+        max-width: 480px;
+    }
+    h2 {
+        color: #fff;
+    }
+}
+
+@media only screen and (min-width: 501px) and (max-width: 767px) {
+    #page {
+        max-width: 480px;
+        margin: 20px auto 20px auto;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+    #page {
+        max-width: 480px;
+        margin: 20px auto 20px auto;
+    }
+}
+
+@media only screen and (min-width: 960px) {
+    #page {
+        max-width: 480px;
+        margin: 20px auto 20px auto;
+    }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {}

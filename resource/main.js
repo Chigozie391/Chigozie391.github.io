@@ -1,12 +1,8 @@
 $(function() {
 
-
-    var json = $.getJSON('resource/package.json');
+    var json = $.getJSON('package.json');
     var $questNo = $('#questNo');
     var $test = $('#questions');
-    var $next = $('#next');
-    var $prev = $('#prev');
-    var $submit = $('#submit');
 
     var correct = 0;
     var pos = 0;
@@ -14,9 +10,9 @@ $(function() {
 
     var $choices, question, chA, chB, chC, insertQuest;
 
-
-
     //localStorage.clear();
+    var username = localStorage.getItem('name');
+
 
     function renderQuestion() {
 
@@ -49,7 +45,6 @@ $(function() {
     }
 
 
-
     function storedAnswer() {
         var radio = document.getElementsByName('choice');
         var storagedata = localStorage.getItem(pos);
@@ -63,7 +58,6 @@ $(function() {
             localStorage.setItem(pos, $(this).val());
         });
     }
-
 
 
     function nextQues() {
@@ -82,7 +76,7 @@ $(function() {
         if (pos < 5) {
             renderQuestion();
         }
-        console.log(answerDataArray);
+        //console.log(answerDataArray);
     }
 
 
@@ -92,7 +86,7 @@ $(function() {
             renderQuestion();
         }
         if ($next.css('display') == 'none') {
-            $next.toggle();
+            $next.css('display', 'inline');
         }
         $submit.hide();
     }
@@ -116,9 +110,11 @@ $(function() {
         });
     }
 
-    $submit.hide();
     renderQuestion();
 
+    $prev = $("<button id ='prev'>prev</button>").appendTo('.container');
+    $next = $("<button id ='next'>Next</button>").appendTo('.container');
+    $submit = $("<button id ='submit'>submit</button>").appendTo('.container').hide();
 
     $next.on('click', nextQues);
     $prev.on('click', previousQues);
