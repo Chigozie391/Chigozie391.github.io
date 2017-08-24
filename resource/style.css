@@ -26,6 +26,21 @@ h2 {
     font-weight: lighter;
 }
 
+#username {
+    position: relative;
+    top: 50px;
+    left: 20px;
+    width: 400px
+}
+
+#username h2 {
+    text-transform: capitalize;
+    font-family: 'Oswald', 'Futura', sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    color: #969696;
+}
+
 #next,
 #prev,
 #submit {
@@ -49,13 +64,9 @@ h2 {
 
 
 @media only screen and (max-width: 500px) {
-    body {
-        background-color: #78909C;
-    }
     div.container {
-        border: none;
+        min-width: 400px;
     }
-
 }
 
 @media only screen and (min-width: 501px) and (max-width: 767px) {

@@ -12,7 +12,8 @@ $(function() {
 
     //localStorage.clear();
     var username = localStorage.getItem('name');
-
+    var $getName = $('<h2>').text('Welcome, ' + username);
+    $('#username').append($getName);
 
     function renderQuestion() {
 
