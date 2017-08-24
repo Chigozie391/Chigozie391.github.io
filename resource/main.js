@@ -12,7 +12,7 @@ $(function() {
 
     //localStorage.clear();
     var username = localStorage.getItem('name');
-    var $getName = $('<h2>').text('Welcome, ' + username);
+    var $getName = $('<h2>').text('Welcome, ' + username.substr(0, 1).toUpperCase() + username.substr(1).toLowerCase());
     $('#username').append($getName);
 
     function renderQuestion() {
