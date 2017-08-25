@@ -3,6 +3,7 @@ $(function() {
     var json = $.getJSON('package.json');
     var $questNo = $('#questNo');
     var $test = $('#questions');
+    var timer = document.getElementById('time');
 
     var correct = 0;
     var pos = 0;
@@ -116,6 +117,31 @@ $(function() {
     $prev = $("<button id ='prev'>prev</button>").appendTo('.container');
     $next = $("<button id ='next'>Next</button>").appendTo('.container');
     $submit = $("<button id ='submit'>submit</button>").appendTo('.container').hide();
+
+    window.onload = function() {
+        var timeInMinutes = 10;
+        var countDown = new Date(new Date().getTime() + (timeInMinutes * 60 * 1000)).getTime();
+
+
+        var updateTimer = setInterval(function() {
+            var now = new Date().getTime();
+            var deadline = countDown - now;
+
+
+            var minutes = Math.floor((deadline % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((deadline % (1000 * 60)) / (1000)) + 1;
+
+
+            timer.innerHTML = ('0' + minutes).slice(-2) + 'm' + ' : ' + ('0' + seconds).slice(-2) + 's';
+            if ((minutes < 1) && (seconds <= 0)) {
+                clearInterval(updateTimer);
+                submit();
+                timer.innerHTML = '';
+
+            }
+
+        }, 1000);
+    };
 
     $next.on('click', nextQues);
     $prev.on('click', previousQues);
