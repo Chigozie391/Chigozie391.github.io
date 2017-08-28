@@ -43,7 +43,7 @@ $(function() {
         return false;
     }
 
-    var timeInMinutes = 0.5;
+    var timeInMinutes = 1;
     var countDown;
 
     if (sessionStorage.getItem('myclock')) {
