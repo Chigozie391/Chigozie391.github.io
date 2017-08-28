@@ -45,7 +45,7 @@ $(function() {
 
 
 
-    var timeInMinutes = 100;
+    var timeInMinutes = 1;
     var countDown;
 
     if (sessionStorage.getItem('myclock')) {
