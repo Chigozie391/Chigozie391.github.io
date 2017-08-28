@@ -1,7 +1,7 @@
 $(function() {
 
     var newData = $.ajax({
-        type: 'POST',
+        type: 'GET',
         url: 'package.json',
         global: false,
         async: false,
