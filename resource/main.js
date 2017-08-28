@@ -23,15 +23,9 @@ $(function() {
     var answerDataArray = [];
     var $choices, question, chA, chB, chC, chD, insertQuest;
     var username;
+    // var $reset;
 
 
-
-    /* if (localStorage.getItem('isSubmitted')) {
-         correct = parseInt(localStorage.getItem('correct'));
-         alreadyPart(correct, data);
-         return false;
-     }
-     */
 
     function getName() {
         if (localStorage.getItem('name')) {
@@ -43,9 +37,15 @@ $(function() {
     }
     getName();
 
+    if (localStorage.getItem('isSubmitted')) {
+        correct = parseInt(localStorage.getItem('correct'));
+        alreadyPart(correct, data);
+        return false;
+    }
 
 
-    var timeInMinutes = 1;
+
+    var timeInMinutes = 2;
     var countDown;
 
     if (sessionStorage.getItem('myclock')) {
@@ -186,15 +186,17 @@ $(function() {
     function alreadyPart(correct, data) {
         $questNo.html('You got ' + correct + ' question(s) right out of ' + data.questionsArray.length + ' Questions');
         $test.html('Hi ' + username + ', You have already participated in this exercise. Thank you.');
+        $reset = $("<button id ='reset'>Reset</button>").appendTo('.container');
+
     }
 
 
 
     renderQuestion(data);
 
-    $prev = $("<button id ='prev'>Previous</button>").appendTo('.container');
-    $next = $("<button id ='next'>Next</button>").appendTo('.container');
-    $submit = $("<button id ='submit'>Submit</button>").appendTo('.container');
+    var $prev = $("<button id ='prev'>Previous</button>").appendTo('.container');
+    var $next = $("<button id ='next'>Next</button>").appendTo('.container');
+    var $submit = $("<button id ='submit'>Submit</button>").appendTo('.container');
 
 
     $next.on('click', function() {
@@ -206,5 +208,8 @@ $(function() {
     $submit.on('click', function() {
         submit(data);
     });
+    //  $reset.on('click', function() {
+    //      console.log('Hiii');
+    //  });
 
 });
