@@ -21,10 +21,17 @@ $(function() {
     var correct = 0;
     var pos = 0;
     var answerDataArray = [];
-    var $choices, question, chA, chB, chC, insertQuest;
+    var $choices, question, chA, chB, chC, chD, insertQuest;
     var username;
 
 
+
+    /* if (localStorage.getItem('isSubmitted')) {
+         correct = parseInt(localStorage.getItem('correct'));
+         alreadyPart(correct, data);
+         return false;
+     }
+     */
 
     function getName() {
         if (localStorage.getItem('name')) {
@@ -34,16 +41,11 @@ $(function() {
             $('#username').append($getName);
         }
     }
-
     getName();
 
-    if (localStorage.getItem('isSubmitted')) {
-        correct = parseInt(localStorage.getItem('correct'));
-        alreadyPart(correct, data);
-        return false;
-    }
 
-    var timeInMinutes = 1;
+
+    var timeInMinutes = 100;
     var countDown;
 
     if (sessionStorage.getItem('myclock')) {
@@ -82,7 +84,6 @@ $(function() {
 
         if (pos === data.questionsArray.length - 1) {
             $next.hide();
-            $submit.toggle();
         }
 
         insertPos = 'Question ' + (pos + 1) + ' of ' + data.questionsArray.length;
@@ -150,15 +151,16 @@ $(function() {
         if ($next.css('display') == 'none') {
             $next.css('display', 'inline');
         }
-        $submit.hide();
     }
 
 
     function submit(data) {
-        nextQues(data);
-
         for (var i = 0; i < data.questionsArray.length; i++) {
-            if (data.questionsArray[i].answer === answerDataArray[i]) {
+            nextQues(data);
+        }
+
+        for (var j = 0; j < data.questionsArray.length; j++) {
+            if (data.questionsArray[j].answer === answerDataArray[j]) {
                 correct++;
             }
         }
@@ -168,6 +170,7 @@ $(function() {
         result(correct, data);
         clearInterval(updateTimer);
         sessionStorage.clear();
+        timer.innerHTML = '';
         isSubmitted = true;
         localStorage.setItem('isSubmitted', isSubmitted);
         localStorage.setItem('correct', correct);
@@ -189,9 +192,9 @@ $(function() {
 
     renderQuestion(data);
 
-    $prev = $("<button id ='prev'>prev</button>").appendTo('.container');
+    $prev = $("<button id ='prev'>Previous</button>").appendTo('.container');
     $next = $("<button id ='next'>Next</button>").appendTo('.container');
-    $submit = $("<button id ='submit'>submit</button>").appendTo('.container').hide();
+    $submit = $("<button id ='submit'>Submit</button>").appendTo('.container');
 
 
     $next.on('click', function() {
