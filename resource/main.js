@@ -17,19 +17,22 @@ $(function() {
     var timer = document.getElementById('time');
 
     var numberOfQuestion;
-    var isSubmitted;
+    var isSubmitted = false;
     var correct = 0;
     var pos = 0;
     var answerDataArray = [];
     var $choices, question, chA, chB, chC, chD, insertQuest;
     var username;
-    // var $reset;
+    var clearTimer = true;
 
 
+
+
+    //localStorage.clear();
 
     function getName() {
-        if (localStorage.getItem('name')) {
-            var name = localStorage.getItem('name');
+        if (sessionStorage.getItem('name')) {
+            var name = sessionStorage.getItem('name');
             username = name.substr(0, 1).toUpperCase() + name.substr(1).toLowerCase();
             var $getName = $('<h2>').text('Welcome, ' + username);
             $('#username').append($getName);
@@ -37,15 +40,16 @@ $(function() {
     }
     getName();
 
-    if (localStorage.getItem('isSubmitted')) {
+    if (localStorage.getItem('isSubmitted') == 'true') {
         correct = parseInt(localStorage.getItem('correct'));
+        answerDataArray = localStorage.getItem('answerDataArray');
         alreadyPart(correct, data);
         return false;
     }
 
 
 
-    var timeInMinutes = 2;
+    var timeInMinutes = 0.5;
     var countDown;
 
     if (sessionStorage.getItem('myclock')) {
@@ -65,11 +69,12 @@ $(function() {
         timer.innerHTML = ('0' + minutes).slice(-2) + 'm' + ' : ' + ('0' + seconds).slice(-2) + 's';
 
         if ((minutes < 1) && (seconds <= 0)) {
-            sessionStorage.clear();
+            sessionStorage.removeItem('myclock');
             for (var i = 0; i < data.questionsArray.length; i++) {
                 nextQues(data);
             }
-            timer.innerHTML = 'EXPIRED';
+            timer.innerHTML = 'EXPIRED, Automatically Submitted';
+            clearTimer = false;
             submit(data);
             clearInterval(updateTimer);
         } else {
@@ -139,7 +144,7 @@ $(function() {
         if (pos < data.questionsArray.length) {
             renderQuestion(data);
         }
-        //  console.log(answerDataArray);
+
     }
 
 
@@ -168,12 +173,13 @@ $(function() {
         $next.detach();
         $prev.detach();
         result(correct, data);
+        if (clearTimer) timer.innerHTML = 'Submitted';
         clearInterval(updateTimer);
-        sessionStorage.clear();
-        timer.innerHTML = '';
+        sessionStorage.removeItem('myclock');
         isSubmitted = true;
         localStorage.setItem('isSubmitted', isSubmitted);
         localStorage.setItem('correct', correct);
+
     }
 
 
@@ -185,9 +191,24 @@ $(function() {
 
     function alreadyPart(correct, data) {
         $questNo.html('You got ' + correct + ' question(s) right out of ' + data.questionsArray.length + ' Questions');
-        $test.html('Hi ' + username + ', You have already participated in this exercise. Thank you.');
-        $reset = $("<button id ='reset'>Reset</button>").appendTo('.container');
+        $test.html('Hi ' + username + ', You have already Participated in this Exercise. Thank you.');
+        $changeAnswer = $("<button id ='changeAnswer'>Change Answer</button>").appendTo('.container');
+        $reset = $("<button id ='reset' >Reset</button>").appendTo('.container');
 
+        $changeAnswer.on('click', function() {
+            isSubmitted = false;
+            localStorage.setItem('isSubmitted', isSubmitted);
+            location.reload(true);
+        });
+
+        $reset.on('click', function() {
+            isSubmitted = false;
+            localStorage.setItem('isSubmitted', isSubmitted);
+            for (var i = 0; i < data.questionsArray.length; i++) {
+                localStorage.removeItem(i);
+            }
+            location.reload(true);
+        });
     }
 
 
@@ -199,6 +220,7 @@ $(function() {
     var $submit = $("<button id ='submit'>Submit</button>").appendTo('.container');
 
 
+
     $next.on('click', function() {
         nextQues(data);
     });
@@ -208,8 +230,6 @@ $(function() {
     $submit.on('click', function() {
         submit(data);
     });
-    //  $reset.on('click', function() {
-    //      console.log('Hiii');
-    //  });
+
 
 });
