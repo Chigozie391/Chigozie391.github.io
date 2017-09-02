@@ -5,6 +5,7 @@ body {
     position: relative;
 }
 
+
 div.container {
     position: relative;
     top: 100px;
@@ -37,8 +38,9 @@ div#questions {
 #timer {
     float: right;
     position: relative;
-    top: 75px;
+    top: 70px;
     left: -50px;
+    width: 400px
 }
 
 
@@ -51,12 +53,15 @@ div#questions {
     font-weight: normal;
 }
 
+
 #username h2 {
     color: #969696;
 }
 
-#time {
+h2#time {
     color: #FF8484;
+    float: right;
+    margin: 0;
 }
 
 #next,
