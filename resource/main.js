@@ -49,39 +49,6 @@ $(function() {
 
 
 
-    var timeInMinutes = 0.5;
-    var countDown;
-
-    if (sessionStorage.getItem('myclock')) {
-        countDown = parseFloat(sessionStorage.getItem('myclock'));
-    } else {
-        countDown = new Date(new Date().getTime() + (timeInMinutes * 60 * 1000)).getTime();
-    }
-
-    var updateTimer = setInterval(function() {
-        var now = new Date().getTime();
-        var deadline = countDown - now;
-
-        var minutes = Math.floor((deadline % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((deadline % (1000 * 60)) / (1000)) + 1;
-
-
-        timer.innerHTML = ('0' + minutes).slice(-2) + 'm' + ' : ' + ('0' + seconds).slice(-2) + 's';
-
-        if ((minutes < 1) && (seconds <= 0)) {
-            sessionStorage.removeItem('myclock');
-            for (var i = 0; i < data.questionsArray.length; i++) {
-                nextQues(data);
-            }
-            timer.innerHTML = 'EXPIRED, Automatically Submitted';
-            clearTimer = false;
-            submit(data);
-            clearInterval(updateTimer);
-        } else {
-            sessionStorage.setItem('myclock', countDown);
-        }
-
-    }, 1000);
 
 
 
@@ -198,7 +165,7 @@ $(function() {
         $changeAnswer.on('click', function() {
             isSubmitted = false;
             localStorage.setItem('isSubmitted', isSubmitted);
-            location.reload(true);
+            location.reload();
         });
 
         $reset.on('click', function() {
@@ -207,13 +174,50 @@ $(function() {
             for (var i = 0; i < data.questionsArray.length; i++) {
                 localStorage.removeItem(i);
             }
-            location.reload(true);
+            location.reload();
         });
     }
 
-
+    var updateTimer;
 
     renderQuestion(data);
+
+    window.onload = (function() {
+        var timeInMinutes = 0.5;
+        var countDown;
+
+        if (sessionStorage.getItem('myclock')) {
+            countDown = parseFloat(sessionStorage.getItem('myclock'));
+        } else {
+            countDown = new Date(new Date().getTime() + (timeInMinutes * 60 * 1000)).getTime();
+        }
+
+        updateTimer = setInterval(function() {
+            var now = new Date().getTime();
+            var deadline = countDown - now;
+
+            var minutes = Math.floor((deadline % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((deadline % (1000 * 60)) / (1000)) + 1;
+
+
+            timer.innerHTML = ('0' + minutes).slice(-2) + 'm' + ' : ' + ('0' + seconds).slice(-2) + 's';
+
+            if ((minutes < 1) && (seconds <= 0)) {
+                sessionStorage.removeItem('myclock');
+                for (var i = 0; i < data.questionsArray.length; i++) {
+                    nextQues(data);
+                }
+                timer.innerHTML = 'EXPIRED, Automatically Submitted';
+                clearTimer = false;
+                submit(data);
+                clearInterval(updateTimer);
+            } else {
+                sessionStorage.setItem('myclock', countDown);
+            }
+
+        }, 1000);
+    });
+
 
     var $prev = $("<button id ='prev'>Previous</button>").appendTo('.container');
     var $next = $("<button id ='next'>Next</button>").appendTo('.container');
